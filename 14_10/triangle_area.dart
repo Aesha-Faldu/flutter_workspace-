@@ -7,7 +7,7 @@ void main(){
 
 
   area = (b*h)/2;
-  print("area of circle is $area");
+  print("area of triangle is $area");
 
 
 }
