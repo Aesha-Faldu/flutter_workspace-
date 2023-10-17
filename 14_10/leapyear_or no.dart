@@ -9,4 +9,4 @@ void main(){
   else
     print("$year year is  Not Leapyear");
 }
-// ((year%4==0) && (year%400==0))
+
