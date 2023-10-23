@@ -2,12 +2,9 @@
 import 'dart:io';
 
 void main(){
-
-  print(" enter numbet for print reverse value ");
-  int num = int.parse(stdin.readLineSync().toString());
-  print("reverse order $num is");
-  for(int i = num ; i>=0; i--){
-    print(i);
-  }
-
+  print("enter number:");
+  var input = stdin.readLineSync();
+  var number = int.parse(input!);
+  var reversedNumber = int.parse(input.split('').reversed.join());
+  print("Number in reverse order: $reversedNumber");
 }
