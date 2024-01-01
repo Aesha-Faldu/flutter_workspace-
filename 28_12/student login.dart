@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'details.dart';
 
 
-enum gender { Male, Female }
+enum gender { Male, Female,Null }
 
 class AdminPage extends StatefulWidget {
   @override
@@ -18,19 +18,69 @@ class AdminPageState extends State<AdminPage> {
   bool two = false;
   bool three = false;
 
-  gender _selectedOption = gender.Male;
+  gender _selectedOption = gender.Null ;
 
 
   String dropdownValue = 'Ahemdabad';
 
 
+
+  TextEditingController lastName = TextEditingController();
+  TextEditingController firstName = TextEditingController();
+  TextEditingController password = TextEditingController();
+  TextEditingController confirmPaswd = TextEditingController();
+  TextEditingController email = TextEditingController();
+
+
+
+
+
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+  }
+  bool _validateForm() {
+    if (!_formKey.currentState!.validate()) {
+      return false;
+    }
+
+    // if (_selectedOption == Null) {
+    //   _showSnackBar("Please select your gender.");
+    //   return false;
+    // }
+
+    if (!(one || two || three)) {
+      _showSnackBar("Please select at least one hobby.");
+      return false;
+    }
+
+    return true;
+  }
+
+  void _onSubmitButtonPressed() {
+    if (_validateForm()) {
+      if (_selectedOption == gender.Null) {
+        _showSnackBar("Please select your gender.");
+      } else {
+        submit(
+          firstName.text,
+          lastName.text,
+          password.text,
+          confirmPaswd.text,
+          email.text,
+          _selectedOption,
+          one,
+          two,
+          three,
+          dropdownValue,
+        );
+      }
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController lastName = TextEditingController();
-    TextEditingController firstName = TextEditingController();
-    TextEditingController password = TextEditingController();
-    TextEditingController confirmPaswd = TextEditingController();
-    TextEditingController email = TextEditingController();
+
 
     return Scaffold(
       appBar: AppBar(
@@ -296,49 +346,22 @@ class AdminPageState extends State<AdminPage> {
                   Text("Singing"),
                 ],
               ),
-              ElevatedButton(onPressed: (){
 
 
-                if (!_formKey.currentState!.validate()) {
-                  // Form validation failed
-                  return;
-                }
+              SizedBox(height: 20,),
 
-                if (_selectedOption == null) {
-                  // Gender not selected
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text("Please select your gender."),
-                    ),
-                  );
-                  return;
-                }
 
-                if (!(one || two || three)) {
-                  // No hobby selected
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text("Please select at least one hobby."),
-                    ),
-                  );
-                  return;
-                }
 
-                // All validations passed, proceed with data processing
-                submit(
-                  firstName.text,
-                  lastName.text,
-                  password.text,
-                  confirmPaswd.text,
-                  email.text,
-                  _selectedOption,
-                  one,
-                  two,
-                  three,
-                  dropdownValue,
-                );
 
-              }, child: Text("Submit")),
+               Container(
+                width: double.infinity,
+                height: 50,
+                 child: ElevatedButton(
+                 onPressed: _onSubmitButtonPressed,
+                 child: Text("Submit"),
+          ),
+        ),
+
               SizedBox(height: 30),
             ],
           ),
@@ -348,6 +371,8 @@ class AdminPageState extends State<AdminPage> {
   }
 
 
+
+
   bool isValidPassword(String password) {
     final RegExp passwordRegex =
     RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{6,}$');
@@ -355,8 +380,6 @@ class AdminPageState extends State<AdminPage> {
   }
 
   bool isValidEmail(String email) {
-    // Email validation using a regular expression
-    // This regex checks for a basic email format
     final RegExp emailRegex =
     RegExp(r'^[a-z0-9._-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}$');
     return emailRegex.hasMatch(email);
@@ -368,7 +391,7 @@ class AdminPageState extends State<AdminPage> {
       String password,
       String confirmPaswd,
       String email,
-      gender? selectedOption,
+      gender? _selectedOption,
       bool hobbyOne,
       bool hobbyTwo,
       bool hobbyThree,
@@ -381,7 +404,7 @@ class AdminPageState extends State<AdminPage> {
         password: password,
         confirmPaswd: confirmPaswd,
         email: email,
-        selectedOption: selectedOption,
+        selectedOption: _selectedOption,
         hobbyOne: hobbyOne,
         hobbyTwo: hobbyTwo,
         hobbyThree: hobbyThree,
@@ -390,7 +413,6 @@ class AdminPageState extends State<AdminPage> {
       ),
       );
 
-    // Process your form data here
     print("Form submitted!");
   }
 }
