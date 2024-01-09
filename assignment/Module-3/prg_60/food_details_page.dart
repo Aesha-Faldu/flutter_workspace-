@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 class FoodDetailsPage extends StatefulWidget {
 
-
   final String image;
   final String diceName;
-  const FoodDetailsPage({super.key, required this.image, required this.diceName});
-
+  const FoodDetailsPage({super.key,  required this.image,  required this.diceName});
   @override
-  State<FoodDetailsPage> createState() => FoodDetailsPageState();
+  State<FoodDetailsPage> createState() => _FoodDetailsPageState();
 }
-
-class FoodDetailsPageState extends State<FoodDetailsPage> {
+class _FoodDetailsPageState extends State<FoodDetailsPage> {
 
   String dec = "Simply put, ramen is a Japanese noode soup, with a combination of a rich flavoured broth, one of a variety of types of noodle and a selection of meats or vegetables, often topped with a boiled egg.";
   @override
@@ -82,9 +79,9 @@ class FoodDetailsPageState extends State<FoodDetailsPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Row(children: [
-                        Icon(Icons.watch_later_outlined,color: Colors.blue,size: 15 ,),
-                        Text("50 min",style: TextStyle(fontSize: 12,fontWeight: FontWeight.normal),),
-                      ],),
+                          Icon(Icons.watch_later_outlined,color: Colors.blue,size: 15 ,),
+                          Text("50 min",style: TextStyle(fontSize: 12,fontWeight: FontWeight.normal),),
+                        ],),
                         SizedBox(width: 30,),
                         Row(children: [
                           Icon(Icons.star,color: Colors.yellow,size: 15 ,),
@@ -95,7 +92,7 @@ class FoodDetailsPageState extends State<FoodDetailsPage> {
                           Icon(Icons.local_fire_department,color: Colors.red,size: 15 ,),
                           Text("350 kcal",style: TextStyle(fontSize: 12,fontWeight: FontWeight.normal),),
                         ],)
-                    ],),
+                      ],),
                     SizedBox(height: 20,),
                     Container(
                       width: 150,
@@ -169,7 +166,7 @@ class FoodDetailsPageState extends State<FoodDetailsPage> {
                                         image: DecorationImage(image: AssetImage("images/food/ingre1.png"),fit: BoxFit.cover,),
                                         borderRadius: BorderRadius.circular(30),
                                       ),
-                                  ),
+                                    ),
                                     Text("Noodle",style: TextStyle(fontSize: 12,),),
                                   ],
                                 ),
@@ -292,11 +289,11 @@ class FoodDetailsPageState extends State<FoodDetailsPage> {
         width: 85,
         height: 50,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(100)
+            borderRadius: BorderRadius.circular(100)
         ),
         child: FloatingActionButton(
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(100),
+            borderRadius: BorderRadius.circular(100),
           ),
           backgroundColor:Colors.yellow.shade700,
           child: Row(
@@ -308,7 +305,7 @@ class FoodDetailsPageState extends State<FoodDetailsPage> {
                 height: 30,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(100)
                 ),
                 child: Text("1",style: TextStyle(fontSize: 10),),
