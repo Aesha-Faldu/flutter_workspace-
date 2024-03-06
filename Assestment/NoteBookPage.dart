@@ -1,7 +1,10 @@
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
+import 'audio Page.dart';
 import 'database.dart';
 import 'homePage.dart';
 class NotebookPage extends StatefulWidget {
@@ -149,7 +152,7 @@ class _NotebookPageState extends State<NotebookPage> {
                               Expanded(child: Text('Please Create NoteBook to add Book Logo ,Title and Write content of Book!',maxLines: 2,)),
                             ],
                           ),
-                            backgroundColor: Colors.blueAccent,
+                            backgroundColor: Colors.brown,
                             padding: EdgeInsets.symmetric(horizontal: 10,vertical: 15),)
                       );
                     }else{
@@ -172,10 +175,27 @@ class _NotebookPageState extends State<NotebookPage> {
                 style: TextStyle(color: Colors.white,fontSize: 12),) ),
             ),
             SizedBox(height: 30,),
-
+            Container(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.brown,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5)
+                      )
+                  ),
+                  onPressed: (){
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AudioUploader()));
+              }, child: Text("Add Audio",textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.white,fontSize: 12),) ),
+            ),
+            SizedBox(height: 30,),
           ],
         ),
       ),
     );
   }
 }
+
+
