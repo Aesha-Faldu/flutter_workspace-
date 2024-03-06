@@ -1,7 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+
 import 'NoteBookPage.dart';
 import 'database.dart';
+
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -82,16 +85,12 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: Container(
-        child:addNotebookDataList.isEmpty?Center(child: Text('Empty Data!',
-          style: TextStyle(color: Colors.black,fontSize: 25,fontWeight: FontWeight.w900),))
-            :GridView.count(
+        child:addNotebookDataList.isEmpty?Center(child: Text('Empty Data!',style: TextStyle(color: Colors.black,fontSize: 25,fontWeight: FontWeight.w900),)):GridView.count(
           crossAxisCount: 2,
           children: searchController.text.length>0?List.generate(searchResultsList.length, (index){
             return InkWell(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>
-                    NotebookPage(isDesc: true,noteLogo: searchResultsList[index]['bookLogo'],
-                      title:searchResultsList[index]['title'],description: searchResultsList[index]['desc'],)));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> NotebookPage(isDesc: true,noteLogo: searchResultsList[index]['bookLogo'],title:searchResultsList[index]['title'],description: searchResultsList[index]['desc'],)));
               },
               child: Column(
                 children: [
@@ -106,18 +105,14 @@ class _HomePageState extends State<HomePage> {
           List.generate(addNotebookDataList.length, (index){
             return InkWell(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>
-                    NotebookPage(isDesc: true,noteLogo: addNotebookDataList[index]['bookLogo'],
-                      title:addNotebookDataList[index]['title'],description: addNotebookDataList[index]['desc'],)));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> NotebookPage(isDesc: true,noteLogo: addNotebookDataList[index]['bookLogo'],title:addNotebookDataList[index]['title'],description: addNotebookDataList[index]['desc'],)));
               },
               child: Column(
                 children: [
                   SizedBox(height: 5,),
                   Image.file(File(addNotebookDataList[index]['bookLogo']),width: 100,height: 150,fit: BoxFit.cover,),
                   SizedBox(height: 5,),
-                  Text(addNotebookDataList[index]['title'],
-                    textAlign: TextAlign.center,maxLines: 3,
-                    style: TextStyle(color: Colors.black,fontSize: 12,fontWeight: FontWeight.w900),)
+                  Text(addNotebookDataList[index]['title'],textAlign: TextAlign.center,maxLines: 3,style: TextStyle(color: Colors.black,fontSize: 12,fontWeight: FontWeight.w900),)
                 ],
               ),
             );
