@@ -107,7 +107,7 @@ class _OTPScreenState extends State<OTPScreen>
               ElevatedButton(
                 onPressed: ()
                 {
-                  verifyPhoneNumber('+918849817263'); // Replace with your phone number
+                  verifyPhoneNumber('+919913070101'); // Replace with your phone number
                 },
                 child: Text('Get OTP'),
               ),
