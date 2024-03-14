@@ -177,7 +177,7 @@ class HomeState extends State<HomePage>
               currentAccountPicture: CircleAvatar(
                 backgroundColor: Colors.orange,
                 child: Text(
-                  "C",
+                  "A",
                   style: TextStyle(fontSize: 40),
                 ),
               ),
