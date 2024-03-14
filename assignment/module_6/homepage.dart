@@ -172,8 +172,8 @@ class HomeState extends State<HomePage>
           padding: EdgeInsets.zero,
           children: [
             UserAccountsDrawerHeader(
-              accountName: Text("Chandani Bachani"),
-              accountEmail: Text("chandanibachani@gmail.com"),
+              accountName: Text("Aesha Patel"),
+              accountEmail: Text("aesha@gmail.com"),
               currentAccountPicture: CircleAvatar(
                 backgroundColor: Colors.orange,
                 child: Text(
