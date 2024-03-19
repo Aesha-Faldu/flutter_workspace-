@@ -151,7 +151,7 @@ class _SignupPageState extends State<SignupPage> {
               ),
             ),
             SizedBox(height: size.height * 0.1,),
-            Text('Made with \u{1F49F} by mansidev', style: TextStyle(color: primeColor, fontSize: 16, fontWeight: FontWeight.normal),),
+            Text('Made with \u{1F49F} by Aesha Dev', style: TextStyle(color: primeColor, fontSize: 16, fontWeight: FontWeight.normal),),
           ],
         ),
       ),
