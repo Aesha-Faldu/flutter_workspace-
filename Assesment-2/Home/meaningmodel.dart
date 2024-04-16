@@ -83,7 +83,7 @@ class _BabyNameState extends State<BabyName> {
                 filterList(selectedGender, newValue);
               }
             },
-            items: <String>['Religion', 'hihndu', 'muslim', 'sikh', 'other']
+            items: <String>['Religion', 'hindu', 'muslim', 'sikh', 'other']
                 .map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
