@@ -1,0 +1,48 @@
+  {
+  "project_info": {
+    "project_number": "546322049862",
+    "project_id": "aesha-fe780",
+    "storage_bucket": "aesha-fe780.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:546322049862:android:1245a2b1909ee4543ad347",
+        "android_client_info": {
+          "package_name": "com.example.otpverification"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlIU2jgjHGt891ZeLV1uQcqgmloIBUDu0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:546322049862:android:36eb989c267028dc3ad347",
+        "android_client_info": {
+          "package_name": "com.example.test1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlIU2jgjHGt891ZeLV1uQcqgmloIBUDu0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
