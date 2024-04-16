@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:babyname/Home/rashi_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -90,10 +91,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: TextStyle(color: Colors.white),
                   ),
                   onTap: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("Nothing is Archieved")),
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => RashiPage()),
                     );
-                    Navigator.pop(context);
                   },
                 ),
               ),
@@ -108,25 +109,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: TextStyle(color: Colors.white),
                   ),
                   onTap: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("Nothing is Deleted")),
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomeScreen()),
                     );
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-              Center(
-                child: ListTile(
-                  leading: Icon(
-                    Icons.favorite,
-                    color: Colors.white,
-                  ),
-                  title: const Text(
-                    'Favourite',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
                   },
                 ),
               ),
