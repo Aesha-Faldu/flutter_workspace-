@@ -42,8 +42,44 @@ class RashiPage extends StatelessWidget {
                   ),
                 ],
             ),
-            Center(child: Text('Display English Rashi Information Here')),
-            Center(child: Text('Display Gujarati Rashi Information Here')),
+            Column(
+              children: [
+                FutureBuilder<List>(
+                  future: getdata(),
+                  builder: (context, ss) {
+                    if (ss.hasData) {
+                      // Assuming RashiModel accepts the list of data
+                      return RashiModel(list: ss.data!!);
+                    }
+                    if (ss.hasError) {
+                      print('Network Not Found');
+                    }
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                FutureBuilder<List>(
+                  future: getdata(),
+                  builder: (context, ss) {
+                    if (ss.hasData) {
+                      // Assuming RashiModel accepts the list of data
+                      return RashiModel(list: ss.data!!);
+                    }
+                    if (ss.hasError) {
+                      print('Network Not Found');
+                    }
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                ),
+              ],
+            ),
           ],
         ),
 
@@ -53,7 +89,7 @@ class RashiPage extends StatelessWidget {
 
   Future<List> getdata()async
   {
-    var response = await http.get(Uri.parse("https://jsonplaceholder.typicode.com/photos"));
+    var response = await http.get(Uri.parse("https://aesha2002.000webhostapp.com/BabyName/Rashi/view.php"));
     return jsonDecode(response.body);
 
   }
