@@ -27,11 +27,11 @@ class _BabyNameState extends State<BabyName> {
     setState(() {
       selectedGender = gender;
       selectedReligion = religion;
-      if (gender == 'All' && religion == 'Religion') {
+      if (gender == 'All' && religion == 'religion') {
         filteredList = widget.list;
-      } else if (gender == 'All' && religion != 'Religion') {
+      } else if (gender == 'All' && religion != 'religion') {
         filteredList = widget.list.where((name) => name['religion'] == religion).toList();
-      } else if (gender != 'All' && religion == 'Religion') {
+      } else if (gender != 'All' && religion == 'religion') {
         filteredList = widget.list.where((name) => name['gender'] == gender.toLowerCase()).toList();
       } else {
         filteredList = widget.list.where((name) => name['gender'] == gender.toLowerCase() && name['religion'] == religion).toList();
@@ -83,7 +83,7 @@ class _BabyNameState extends State<BabyName> {
                 filterList(selectedGender, newValue);
               }
             },
-            items: <String>['Religion', 'Hindu', 'Muslim', 'Sikh', 'Other']
+            items: <String>['Religion', 'hihndu', 'muslim', 'sikh', 'other']
                 .map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
