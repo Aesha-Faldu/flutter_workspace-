@@ -1,1 +1,107 @@
+import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
 
+void main() {
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    theme: ThemeData(
+      primarySwatch: Colors.blue,
+    ),
+    home: const MyApp(),
+  ));
+}
+
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final _lat = TextEditingController();
+  final _long = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('api call'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextField(
+              controller: _lat,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Lattitude',
+              ),
+            ),
+            TextField(
+              controller: _long,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Longitute',
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  getLocationData(_lat.text, _long.text);
+                });
+              },
+              child: const Text("Submit"),
+            ),
+            _lat.text.isNotEmpty && _long.text.isNotEmpty
+                ? Container(
+                    height: 420,//add particular size accordinng to device
+                    width: 420,//add particular size accordinng to device
+                    child: _getLocation(
+                        getLocationData(_lat.text.trim(), _long.text.trim())))
+                : Container(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<Map<String, dynamic>> getLocationData(String lat, String long) async {
+    var url = Uri.parse(
+        'https://api.geoapify.com/v1/geocode/reverse?lat=${lat}2&lon=${long}&apiKey=a9691b8a738b4db98a35b8e6d3735cec');
+
+    var resp = await http.get(url);
+
+    return jsonDecode(resp.body);
+  }
+
+  Widget _getLocation(Future<Map<String, dynamic>> futuer) {
+    return FutureBuilder<Map<String, dynamic?>>(
+      future: futuer,
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Center(
+            child: Text(snapshot.error.toString()),
+          );
+        }
+        if (snapshot.hasData) {
+          print(snapshot.data);
+          return _showAddress(snapshot);
+        }
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+  }
+
+  Widget _showAddress(AsyncSnapshot<Map<String, dynamic?>> snapshot) {
+    return Text(
+        snapshot.data!['features'][0]['properties']['country'].toString());
+  }
+}
