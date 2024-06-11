@@ -3,24 +3,12 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    theme: ThemeData(
-      primarySwatch: Colors.blue,
-    ),
-    home: const MyApp(),
-  ));
-}
-
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
-
+class LocationForm extends StatefulWidget {
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<LocationForm> createState() => _LocationFormState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _LocationFormState extends State<LocationForm> {
   final _lat = TextEditingController();
   final _long = TextEditingController();
 
@@ -28,44 +16,50 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('api call'),
+        title: const Text('API Call'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: _lat,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Lattitude',
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              TextField(
+                controller: _lat,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Latitude',
+                  labelText: "Latitude",
+                ),
               ),
-            ),
-            TextField(
-              controller: _long,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Longitute',
+              SizedBox(height: 20),
+              TextField(
+                controller: _long,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Longitude',
+                  labelText: "Longitude",
+                ),
               ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  getLocationData(_lat.text, _long.text);
-                });
-              },
-              child: const Text("Submit"),
-            ),
-            _lat.text.isNotEmpty && _long.text.isNotEmpty
-                ? Container(
-                    height: 420,//add particular size accordinng to device
-                    width: 420,//add particular size accordinng to device
-                    child: _getLocation(
-                        getLocationData(_lat.text.trim(), _long.text.trim())))
-                : Container(),
-          ],
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    getLocationData(_lat.text, _long.text);
+                  });
+                },
+                child: const Text("Submit"),
+              ),
+              _lat.text.isNotEmpty && _long.text.isNotEmpty
+                  ? Container(
+                  height: 500, // Add particular size according to device
+                  width: 500,  // Add particular size according to device
+                  child: _getLocation(
+                      getLocationData(_lat.text.trim(), _long.text.trim())))
+                  : Container(),
+            ],
+          ),
         ),
       ),
     );
@@ -73,25 +67,34 @@ class _MyAppState extends State<MyApp> {
 
   Future<Map<String, dynamic>> getLocationData(String lat, String long) async {
     var url = Uri.parse(
-        'https://api.geoapify.com/v1/geocode/reverse?lat=${lat}2&lon=${long}&apiKey=a9691b8a738b4db98a35b8e6d3735cec');
+        'https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${long}&zoom=18&addressdetails=1');
 
     var resp = await http.get(url);
 
-    return jsonDecode(resp.body);
+    if (resp.statusCode == 200) {
+      return jsonDecode(resp.body);
+    } else {
+      throw Exception('Failed to load location data');
+    }
   }
 
-  Widget _getLocation(Future<Map<String, dynamic>> futuer) {
-    return FutureBuilder<Map<String, dynamic?>>(
-      future: futuer,
+  Widget _getLocation(Future<Map<String, dynamic>> future) {
+    return FutureBuilder<Map<String, dynamic>>(
+      future: future,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Center(
             child: Text(snapshot.error.toString()),
           );
         }
-        if (snapshot.hasData) {
-          print(snapshot.data);
-          return _showAddress(snapshot);
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasData) {
+            return _showAddress(snapshot);
+          } else {
+            return Center(
+              child: Text('No data found'),
+            );
+          }
         }
         return const Center(
           child: CircularProgressIndicator(),
@@ -100,8 +103,31 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  Widget _showAddress(AsyncSnapshot<Map<String, dynamic?>> snapshot) {
-    return Text(
-        snapshot.data!['features'][0]['properties']['country'].toString());
+  Widget _showAddress(AsyncSnapshot<Map<String, dynamic>> snapshot) {
+    var address = snapshot.data!['address'];
+    if (address == null) {
+      return Text('Address not available');
+    }
+
+    String displayName = snapshot.data!['display_name'] ?? 'N/A';
+    String road = address['road'] ?? 'N/A';
+    String town = address['town'] ?? 'N/A';
+    String city = address['city'] ?? 'N/A';
+    String state = address['state'] ?? 'N/A';
+    String postcode = address['postcode'] ?? 'N/A';
+    String country = address['country'] ?? 'N/A';
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Display Name: $displayName'),
+        Text('Road: $road'),
+        Text('Town: $town'),
+        Text('City: $city'),
+        Text('State: $state'),
+        Text('Postcode: $postcode'),
+        Text('Country: $country'),
+      ],
+    );
   }
 }
